@@ -1,0 +1,43 @@
+.wide-col {
+    min-width: 200px;  /* Điều chỉnh độ rộng tối thiểu cho các cột 'name' */
+    max-width: 400px;  /* Điều chỉnh độ rộng tối đa cho các cột 'name' */
+  }
+  
+  .narrow-col {
+    min-width: 50px;  /* Điều chỉnh độ rộng tối thiểu cho các cột khác */
+    max-width: 100px; /* Điều chỉnh độ rộng tối đa cho các cột khác */
+    text-overflow: ellipsis; /* Nếu nội dung quá dài, hiển thị dấu ba chấm */
+    white-space: nowrap; /* Ngừng xuống dòng để tránh làm rộng thêm cột */
+    overflow: hidden; /* Ẩn phần nội dung bị tràn ra ngoài */
+  }
+  /* Đảm bảo rằng các thẻ Card có chiều cao bằng nhau */
+/* Đảm bảo rằng các thẻ Card có chiều cao và chiều rộng bằng nhau */
+.card-img {
+    height: 200px; /* Bạn có thể điều chỉnh chiều cao của hình ảnh theo nhu cầu */
+    width: 100%; /* Đảm bảo rằng hình ảnh chiếm hết chiều rộng của Card */
+    object-fit: cover; /* Đảm bảo hình ảnh sẽ cắt theo tỷ lệ mà không làm biến dạng */
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Đảm bảo thẻ card có chiều cao bằng nhau */
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Để đảm bảo nội dung trong Card không vượt quá chiều cao */
+  }
+  
+  .card-body .mt-auto {
+    margin-top: auto; /* Đẩy các phần tử (Giá, Calo) xuống dưới cùng của Card */
+  }
+  
+  /* Đảm bảo chiều rộng của Card trong mỗi cột */
+  @media (min-width: 576px) {
+    .card {
+      width: 100%; /* Đảm bảo mỗi thẻ card có chiều rộng đồng đều trong các cột */
+    }
+  }
+  
