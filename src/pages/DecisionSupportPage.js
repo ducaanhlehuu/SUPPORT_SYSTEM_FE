@@ -7,6 +7,7 @@ import mockApiResponse from './mock-response.json';
 import { fetchFood, fetchTypes } from '../api/ApiClient';
 import DataTable from '../components/DataTable';
 import LocationSelector from '../components/LocationSelector';
+import DateTimePicker from '../components/DateTimePicker';
 
 const DecisionSupportPage = () => {
   const [priceMin, setPriceMin] = useState('');
@@ -17,7 +18,8 @@ const DecisionSupportPage = () => {
   const [currentStep, setCurrentStep] = useState(null);
   const [foodTypes, setFoodTypes] = useState([]); 
   const [location, setLocation] = useState({ lat: 21.00669167077796, lng: 105.8542 });
-  const [foods, setFoods] = useState([])
+  const [foods, setFoods] = useState([]);
+  const [selectedDate, setDate] = useState(new Date());
 
   useEffect(() => {
     const savedLocation = JSON.parse(localStorage.getItem('userLocation'));
@@ -149,11 +151,9 @@ const DecisionSupportPage = () => {
   const formatTime = () => {
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   
-    const currentDate = new Date();
-  
-    const dayOfWeek = currentDate.getDay(); // Get day of week (0-6)
-    const hour = currentDate.getHours(); // Get hour (0-23)
-    const minute = currentDate.getMinutes(); // Get minute (0-59)
+    const dayOfWeek = selectedDate.getDay(); // Get day of week (0-6)
+    const hour = selectedDate.getHours(); // Get hour (0-23)
+    const minute = selectedDate.getMinutes(); // Get minute (0-59)
   
     const formattedMinute = minute < 10 ? `0${minute}` : minute;
   
@@ -228,12 +228,17 @@ const DecisionSupportPage = () => {
                   ))}
                 </Row>
               </Form.Group>
-             
+              <Form.Group style={{ marginTop: '0.6rem' }}>
+                <Form.Label>Thời gian</Form.Label>
+                <Row>
+                  <DateTimePicker dateTime={selectedDate} setDateTime={setDate}/>
+                </Row>
+              </Form.Group>
             </Col>
           </Row>
           <Form.Group className="mt-4">
                 <Form.Label>Chọn vị trí</Form.Label>
-                <LocationSelector setLocation={setLocation} />
+                <LocationSelector location={location} setLocation={setLocation} />
           </Form.Group>
           <div className="d-flex justify-content-center mt-3">
             <Button
