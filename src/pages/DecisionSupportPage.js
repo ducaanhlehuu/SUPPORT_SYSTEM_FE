@@ -48,7 +48,7 @@ const DecisionSupportPage = () => {
     const getFoodTypes = async () => {
       try {
         const data = await fetchTypes();
-        setFoodTypes(data.msg.data); 
+        setFoodTypes(data); 
       } catch (error) {
         toast.error('Không thể tải danh sách loại đồ ăn.');
       }

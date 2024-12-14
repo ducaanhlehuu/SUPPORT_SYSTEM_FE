@@ -13,7 +13,6 @@ const apiClient = axios.create({
 const fetchFood = async (time, type, calo, lat, long, minPrice, maxPrice) => {
     try {
       const url = `/food?time=${encodeURIComponent(time)}&type=${encodeURIComponent(type)}&calo=${encodeURIComponent(calo)}&lat=${encodeURIComponent(lat)}&long=${encodeURIComponent(long)}&min_price=${encodeURIComponent(minPrice)}&max_price=${encodeURIComponent(maxPrice)}`;
-  
       const response = await apiClient.get(url);
   
       return response.data;
@@ -35,7 +34,7 @@ const fetchRestaurants = async () => {
 
 const fetchTypes = async () => {
   try {
-    const response = await apiClient.get('/types');
+    const response = await apiClient.get('/type');
     return response.data;
   } catch (error) {
     console.error('Error fetching types:', error);
