@@ -1,5 +1,5 @@
-import React from "react";
-import { Table } from "react-bootstrap";
+import React, { useState } from "react";
+import { Table, Pagination } from "react-bootstrap";
 
 const DataTable = ({ data }) => {
   const headers = [
@@ -19,6 +19,17 @@ const DataTable = ({ data }) => {
     { key: "restaurant_avg_rating", label: "Đánh giá trung bình", width: "150px" },
   ];
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  // Xác định dữ liệu của trang hiện tại
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentData = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Tổng số trang
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
   // Hàm để kiểm tra và làm tròn số
   const formatValue = (value) => {
     if (typeof value === "number") {
@@ -27,46 +38,77 @@ const DataTable = ({ data }) => {
     return value; // Giữ nguyên nếu không phải số
   };
 
+  // Hàm xử lý chuyển trang
+  const handlePrevPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
   return (
-    <div
-      style={{
-        maxHeight: "80vh",
-        overflowY: "auto",
-        border: "1px solid #dee2e6", 
-      }}
-    >
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            {headers.map((header, index) => (
-              <th
-                key={index}
-                style={{
-                  width: header.width,
-                  whiteSpace: "normal",
-                  wordWrap: "break-word",
-                  textAlign: "center",
-                }}
-              >
-                {header.label}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item, rowIndex) => (
-            <tr key={rowIndex}>
-              {headers.map((header, colIndex) => (
-                <td key={colIndex} style={{ textAlign: "center" }}>
-                  {header.key === "stt"
-                    ? rowIndex + 1
-                    : formatValue(item[header.key] || "")}
-                </td>
+    <div>
+      <div
+        style={{
+          maxWidth: "100%",
+          maxHeight: "80vh",
+          overflowY: "auto",
+          overflowX: "auto",
+          border: "1px solid #dee2e6",
+        }}
+      >
+        <Table striped bordered hover responsive style={{ minWidth: "1200px" }}>
+          <thead>
+            <tr>
+              {headers.map((header, index) => (
+                <th
+                  key={index}
+                  style={{
+                    width: header.width,
+                    whiteSpace: "normal",
+                    overflowWrap: "break-word",
+                    textAlign: "center",
+                  }}
+                >
+                  {header.label}
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {currentData.map((item, rowIndex) => (
+              <tr key={rowIndex}>
+                {headers.map((header, colIndex) => (
+                  <td key={colIndex} style={{
+                    width: header.width,
+                    whiteSpace: "normal",
+                    overflowWrap: "break-word",
+                    textAlign: "center",
+                  }}>
+                    {header.key === "stt"
+                      ? indexOfFirstItem + rowIndex + 1
+                      : formatValue(item[header.key] || "")}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+      <Pagination className="justify-content-center mt-3">
+        <Pagination.Prev
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+        />
+        <Pagination.Item active>
+          Trang {currentPage} / {totalPages}
+        </Pagination.Item>
+        <Pagination.Next
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        />
+      </Pagination>
     </div>
   );
 };

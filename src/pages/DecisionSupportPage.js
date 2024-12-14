@@ -20,6 +20,7 @@ const DecisionSupportPage = () => {
   const [location, setLocation] = useState({ lat: 21.00669167077796, lng: 105.8542 });
   const [foods, setFoods] = useState([]);
   const [selectedDate, setDate] = useState(new Date());
+  const [apiResponse, setApiResponse] = useState([]);
 
   useEffect(() => {
     const savedLocation = JSON.parse(localStorage.getItem('userLocation'));
@@ -67,8 +68,8 @@ const DecisionSupportPage = () => {
 
   const fetchDataDemo = () => {
     setTimeout(() => {
-      setSteps(mockApiResponse);
-      const firstStepKey = Object.keys(mockApiResponse)[0];
+      setSteps(apiResponse);
+      const firstStepKey = Object.keys(apiResponse)[0];
       setCurrentStep(firstStepKey);
     }, 1000);
   };
@@ -96,8 +97,8 @@ const DecisionSupportPage = () => {
         priceMin, 
         priceMax 
       );
-
-      setFoods(response.msg.data);
+      setFoods(response[5].rows);
+      setApiResponse(response);
       setCurrentStep(null); 
     } catch (error) {
       toast.error('Đã có lỗi xảy ra. Vui lòng thử lại.');
@@ -305,16 +306,16 @@ const DecisionSupportPage = () => {
      {foods.length > 0 && (
         <Container>
           <Row>
-            {foods.map((food) => (
-              <Col key={food.id} xs={12} md={4} lg={3} className="mb-4 d-flex">
+            {foods.map((food, index) => (
+              <Col key={index} xs={12} md={4} lg={3} className="mb-4 d-flex">
                 <Card className="h-100">
                   <Card.Img variant="top" src={food.image} className="card-img" />
                   <Card.Body className="d-flex flex-column">
                     <Card.Title>{food.name}</Card.Title>
                     <Card.Text>{food.description}</Card.Text>
                     <div className="d-flex justify-content-between mt-auto">
-                      <span>Giá: {food.price} VNĐ</span>
-                      <span>Calo: {food.calo}</span>
+                      <span>Giá: {food.original_price} VNĐ</span>
+                      <span>Calo: {food.original_calo}</span>
                     </div>
                   </Card.Body>
                 </Card>
