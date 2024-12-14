@@ -5,7 +5,7 @@ const DataTable = ({ data }) => {
   const headers = [
     { key: "stt", label: "STT", width: "50px" },
     { key: "name", label: "Tên món", width: "200px" },
-    { key: "description", label: "Mô tả", width: "100px" },
+    // { key: "description", label: "Mô tả", width: "100px" },
     { key: "original_price", label: "Giá gốc", width: "100px" },
     { key: "original_calo", label: "Calo gốc", width: "100px" },
     { key: "original_rating", label: "Đánh giá gốc", width: "100px" },

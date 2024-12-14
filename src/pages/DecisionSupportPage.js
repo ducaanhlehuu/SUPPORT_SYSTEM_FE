@@ -71,7 +71,7 @@ const DecisionSupportPage = () => {
       setSteps(apiResponse);
       const firstStepKey = Object.keys(apiResponse)[0];
       setCurrentStep(firstStepKey);
-    }, 1000);
+    }, 300);
   };
   
   const handleSubmit = async (e) => {
@@ -97,9 +97,10 @@ const DecisionSupportPage = () => {
         priceMin, 
         priceMax 
       );
-      setFoods(response[5].rows);
+      setFoods(response[5].rows.slice(0, 40));
       setApiResponse(response);
       setCurrentStep(null); 
+      toast.info("Tải dữ liệu thành công!")
     } catch (error) {
       toast.error('Đã có lỗi xảy ra. Vui lòng thử lại.');
       console.error(error);
@@ -118,7 +119,7 @@ const DecisionSupportPage = () => {
         toast.error('Khoảng giá không hợp lệ!');
         return;
       }
-      setFoods([])
+      // setFoods([])
       fetchDataDemo();
       return;
     } catch (error) {
@@ -265,7 +266,7 @@ const DecisionSupportPage = () => {
       </Card>
       </Container>
       {currentStep && (
-        <Card className="shadow-sm"> 
+        <Card className="shadow-sm mb-5"> 
           <Card.Header className="d-flex justify-content-between align-items-center">
             <h4 className="mb-0" style={{ color: "darkred" }}>
               {
@@ -314,8 +315,8 @@ const DecisionSupportPage = () => {
                     <Card.Title>{food.name}</Card.Title>
                     <Card.Text>{food.description}</Card.Text>
                     <div className="d-flex justify-content-between mt-auto">
-                      <span>Giá: {food.original_price} VNĐ</span>
-                      <span>Calo: {food.original_calo}</span>
+                      <span style={{color:"darkred"}}>Giá: {food.original_price} VNĐ</span>
+                      <span style={{color:"blue"}}>Calo: {food.original_calo}</span>
                     </div>
                   </Card.Body>
                 </Card>
