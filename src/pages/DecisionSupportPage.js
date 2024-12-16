@@ -39,11 +39,9 @@ const DecisionSupportPage = () => {
         },
         (error) => {
           console.error(error);
-          toast.error('Không thể lấy vị trí hiện tại');
         }
       );
     } else {
-      toast.error('Trình duyệt của bạn không hỗ trợ Geolocation');
     }
 
     const getFoodTypes = async () => {
@@ -51,7 +49,6 @@ const DecisionSupportPage = () => {
         const data = await fetchTypes();
         setFoodTypes(data); 
       } catch (error) {
-        toast.error('Không thể tải danh sách loại đồ ăn.');
       }
     };
 
@@ -79,11 +76,9 @@ const DecisionSupportPage = () => {
 
     try {
       if (selectedFoodTypes.length === 0) {
-        toast.error('Vui lòng chọn ít nhất một loại đồ ăn');
         return;
       }
       if (priceMin > priceMax) {
-        toast.error('Khoảng giá không hợp lệ!');
         return;
       }
       const { lat, lng } = location;
@@ -100,9 +95,7 @@ const DecisionSupportPage = () => {
       setFoods(response[5].rows.slice(0, 40));
       setApiResponse(response);
       setCurrentStep(null); 
-      toast.info("Tải dữ liệu thành công!")
     } catch (error) {
-      toast.error('Đã có lỗi xảy ra. Vui lòng thử lại.');
       console.error(error);
     }
   };
@@ -112,18 +105,15 @@ const DecisionSupportPage = () => {
 
     try {
       if (selectedFoodTypes.length === 0) {
-        toast.error('Vui lòng chọn ít nhất một loại đồ ăn');
         return;
       }
       if (priceMin > priceMax) {
-        toast.error('Khoảng giá không hợp lệ!');
         return;
       }
       // setFoods([])
       fetchDataDemo();
       return;
     } catch (error) {
-      toast.error('Đã có lỗi xảy ra. Vui lòng thử lại.');
       console.error(error);
     }
   };
@@ -325,7 +315,6 @@ const DecisionSupportPage = () => {
           </Row>
         </Container>
       )}
-      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };

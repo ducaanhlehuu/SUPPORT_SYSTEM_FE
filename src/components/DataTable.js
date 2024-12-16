@@ -17,6 +17,7 @@ const DataTable = ({ data }) => {
     { key: "restaurant_name", label: "Tên nhà hàng", width: "250px" },
     { key: "restaurant_total_review", label: "Tổng đánh giá", width: "150px" },
     { key: "restaurant_avg_rating", label: "Đánh giá trung bình", width: "150px" },
+    {key: "c_asterisk", label: "C*", width: "150px"}
   ];
 
   const [currentPage, setCurrentPage] = useState(1);
